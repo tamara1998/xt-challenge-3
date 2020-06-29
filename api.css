@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+body{
+	font-family: 'Montserrat', sans serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background: black;
+}
+
+h1{
+	text-align: center;
+	color: white;
+	font-size: 50px; 
+}
+
+p{
+	color: black;
+}
+
+.map{
+	color: white;
+}
+
+#weather > .forecastMoment {
+	float: right;
+	width: 96px;
+	margin: 2px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	text-align: center;
+	background-color: #D7DBDF;
+	border-radius: 6px;
+	color: #444;
+	font-size: 0.8em;
+}
+
+.temp {
+	font-weight: bold;
+	color: #0af;
+	font-size: 1.3em;
+}
+
+.container{
+	display: grid;
+	grid-template-columns: 15px 1fr;
+	grid-template-rows: 50px 1fr 50px; 
+	grid-template-areas: 
+		"aside header"
+		"aside main"
+		"aside footer";
+	
+}
+
+#map{
+	position: relative;
+	padding-top: 250px;
+	padding-bottom: 350px;
+	width: 700px;
+	top: 10%;
+	}
+
+.main{
+	grid-area: main;
+}
+
+.header{
+	grid-area: header;
+}
+
+.aside{
+	grid-area: aside;
+}
+
+@media screen and (max-width: 2546px){
+	#map{
+	position: relative;
+	padding-top: 250px;
+	padding-bottom: 350px;
+	width: 700px;
+	top: 10%;
+	}
+	
+} 
+
+@media screen and (max-width: 1025px){
+
+	#map{
+	position: relative;
+	padding-top: 250px;
+	padding-bottom: 350px;
+	width: 500px;
+	top: 10%;
+	}
+} 
+
+@media screen and (max-width: 375px){
+	#map{
+	position: relative;
+	padding-top: 250px;
+	padding-bottom: 350px;
+	width: 150px;
+	top: 10%;
+	}
+
+} 

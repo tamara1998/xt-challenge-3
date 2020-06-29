@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1" >
+		<title>Space X API</title>
+		<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="api.css">
+		<script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+		<link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<h1>Space X</h1>
+			</header>
+			<aside class="aside"></aside>
+			<main class="main">
+				<div id="map"></div>
+				<script type="text/javascript">
+					mapboxgl.accessToken = 'pk.eyJ1IjoidGFtYXJhZGV2cmllczk4IiwiYSI6ImNrOGszNDI1eTAxanozaG51Znp4YW9hMjYifQ.w6nEG3jRhAD5bVbO0jWQ9w';
+					var map = new mapboxgl.Map({
+					container: 'map', // container id
+					style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+					center: [-80.5772, 28.5621],
+  					zoom: 15,// starting zoom
+					});
+					var popup = new mapboxgl.Popup()
+					 .setHTML('<h3>Cape Canaveral Air Force Station</h3><p>This is your landing site. Please land safely.</p>');
+
+					//Adding a marker based on lon lat coordinates
+					var marker = new mapboxgl.Marker()
+					.setLngLat([-80.5772, 28.5621])
+					.setPopup(popup)
+					.addTo(map);
+				</script>
+				<div id="weather"></div>
+				<script type="text/javascript">
+				function getAPIdata() {
+				    fetch('https://api.openweathermap.org/data/2.5/weather?q=cocoa&units=metric&APPID=03e6e9df6c9ba548c1ac43f40da8785b')
+
+				    .then(function(response) {
+				        return response.json();
+				    })
+
+				    .then(function(response) {
+				      console.log(response);
+				     document.getElementById('weather').innerHTML = response.main.temp;
+				    })
+
+				    .catch(function (error) {
+				      //console.error('Request failed', error);
+				    });
+				}
+
+				function onAPISucces(response) {
+
+					var weatherList = response.list;
+					var weatherBox = document.getElementById('weather');
+
+					for(var i=0; i< weatherList.length; i++){
+						//console.log(weatherList[i].main.temp - 273.15);
+
+						var dateTime = new Date(weatherList[i].dt_txt);
+						var date = formDate(dateTime);
+						var time = formTime(dateTime);
+						var temp = Math.floor(weatherList[i].main.temp - 273.15);
+						var iconUrl = 'http://openweathermap.org/img/w/'+weatherList[i].weather[0].icon+'.png';
+
+						forecastMessage =  '<div class="forecastMoment">';
+						forecastMessage +=   '<div class="date"> '+date+' </div>';
+						forecastMessage +=	 '<div class="time"> '+ time +' </div>';
+						forecastMessage +=	 '<div class="temp"> '+temp+'&#176;C </div>';
+						forecastMessage +=	 '<div class="icon"> <img src="'+iconUrl+'"> </div>';
+						forecastMessage += '</div>';
+
+						weatherBox.innerHTML += forecastMessage;
+					}
+				}
+				
+				getAPIdata();
+				</script>
+			</main>
+		</div>
+	</body>
+</html>
